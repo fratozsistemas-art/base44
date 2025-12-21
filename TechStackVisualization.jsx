@@ -1,6 +1,18 @@
-import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { Code, Server, Cloud, Database, Cpu, Shield } from "lucide-react";
+import * as Icons from "lucide-react";
+
+const fallbackIcon = Icons.Code || (() => null);
+
+const iconRegistry = {
+  frontend: Icons.Code || fallbackIcon,
+  backend: Icons.Server || fallbackIcon,
+  infrastructure: Icons.Cloud || fallbackIcon,
+  dataLayer: Icons.Database || Icons.DatabaseIcon || Icons.Server || fallbackIcon,
+  ai: Icons.Cpu || fallbackIcon,
+  security: Icons.Shield || fallbackIcon
+};
+
+const getSafeIcon = (icon) => (typeof icon === "function" ? icon : fallbackIcon);
 
 export default function TechStackVisualization({ techStack }) {
   if (!techStack) return null;
@@ -8,7 +20,7 @@ export default function TechStackVisualization({ techStack }) {
   const layers = [
     {
       title: "Frontend",
-      icon: Code,
+      icon: iconRegistry.frontend,
       color: "blue",
       data: techStack.frontend,
       sections: [
@@ -19,7 +31,7 @@ export default function TechStackVisualization({ techStack }) {
     },
     {
       title: "Backend",
-      icon: Server,
+      icon: iconRegistry.backend,
       color: "purple",
       data: techStack.backend,
       sections: [
@@ -30,7 +42,7 @@ export default function TechStackVisualization({ techStack }) {
     },
     {
       title: "Infrastructure",
-      icon: Cloud,
+      icon: iconRegistry.infrastructure,
       color: "cyan",
       data: techStack.infrastructure,
       sections: [
@@ -41,7 +53,7 @@ export default function TechStackVisualization({ techStack }) {
     },
     {
       title: "Data Layer",
-      icon: Database,
+      icon: iconRegistry.dataLayer,
       color: "green",
       data: techStack.data_layer,
       sections: [
@@ -52,7 +64,7 @@ export default function TechStackVisualization({ techStack }) {
     },
     {
       title: "AI/ML",
-      icon: Cpu,
+      icon: iconRegistry.ai,
       color: "pink",
       data: techStack.ai_ml_capabilities,
       sections: [
@@ -63,7 +75,7 @@ export default function TechStackVisualization({ techStack }) {
     },
     {
       title: "Security",
-      icon: Shield,
+      icon: iconRegistry.security,
       color: "red",
       data: techStack.security_compliance,
       sections: [
@@ -86,7 +98,7 @@ export default function TechStackVisualization({ techStack }) {
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
       {layers.map((layer, idx) => {
-        const Icon = layer.icon;
+        const Icon = getSafeIcon(layer.icon);
         const hasData = layer.data && Object.keys(layer.data).length > 0;
         
         return (
