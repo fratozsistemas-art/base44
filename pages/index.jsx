@@ -1,4 +1,3 @@
-import React from 'react'
 import ModeSelector from '@/ModeSelector.jsx'
 import QuickActionCard from '@/QuickActionCard.jsx'
 import LoadingState from '@/components/ui/LoadingState.jsx'
