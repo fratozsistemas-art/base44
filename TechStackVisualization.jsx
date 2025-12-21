@@ -1,6 +1,5 @@
-import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { Code, Server, Cloud, Database, Cpu, Shield } from "lucide-react";
+import { Code, Server, Cloud, Database as DatabaseIcon, Cpu, Shield } from "lucide-react";
 
 export default function TechStackVisualization({ techStack }) {
   if (!techStack) return null;
@@ -41,7 +40,7 @@ export default function TechStackVisualization({ techStack }) {
     },
     {
       title: "Data Layer",
-      icon: Database,
+      icon: DatabaseIcon,
       color: "green",
       data: techStack.data_layer,
       sections: [
@@ -86,7 +85,7 @@ export default function TechStackVisualization({ techStack }) {
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
       {layers.map((layer, idx) => {
-        const Icon = layer.icon;
+        const Icon = layer.icon || Code;
         const hasData = layer.data && Object.keys(layer.data).length > 0;
         
         return (
