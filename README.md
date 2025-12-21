@@ -1,6 +1,5 @@
 # Base44 App
 
-
 This app was created automatically by Base44.
 It's a Vite+React app that communicates with the Base44 API.
 
@@ -16,6 +15,18 @@ npm run dev
 ```bash
 npm run build
 ```
+
+## Configuração do Base44 SDK
+
+Crie um arquivo `.env` baseado em `.env.example` e defina ao menos `VITE_BASE44_APP_ID`. Não compartilhe a chave; mantenha-a apenas no ambiente de execução ou em um gerenciador de segredos.
+
+```bash
+cp .env.example .env
+# preencha VITE_BASE44_APP_ID
+```
+
+Variáveis opcionais:
+- `VITE_BASE44_API_URL` e `VITE_BASE44_DATABASE_URL` para apontar para APIs ou bancos personalizados.
 
 ## Como reconciliar versões
 

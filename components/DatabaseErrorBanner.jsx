@@ -3,6 +3,7 @@ import { base44Status } from '@/api/base44Client'
 
 export function DatabaseErrorBanner({ message = null }) {
   const errorMessage = message || base44Status.errorMessage
+  const missingEnv = base44Status.missingEnv || []
 
   if (base44Status.ready) return null
 
@@ -15,6 +16,9 @@ export function DatabaseErrorBanner({ message = null }) {
           <p className="text-red-100/90">
             {errorMessage || 'O cliente Base44 não conseguiu inicializar a camada de database.'}
           </p>
+          {missingEnv.length > 0 && (
+            <p className="text-red-100/80">Defina as variáveis: {missingEnv.join(', ')}.</p>
+          )}
           <ul className="list-disc space-y-1 pl-4 text-red-100/80">
             <li>Confirme as variáveis de ambiente do SDK (APP_ID, URLs de API e database).</li>
             <li>Garanta que o banco remoto esteja acessível a partir deste ambiente.</li>
