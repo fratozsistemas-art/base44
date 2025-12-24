@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
+import { CheckCircleIcon } from "@/lib/icons";
 
 export default function PricingCard({ plan, index }) {
   const [billingCycle, setBillingCycle] = useState("monthly");
@@ -121,7 +122,7 @@ export default function PricingCard({ plan, index }) {
           <ul className="space-y-3">
             {plan.features.map((feature, idx) => (
               <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
-                <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <CheckCircleIcon className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                 <span>{feature}</span>
               </li>
             ))}

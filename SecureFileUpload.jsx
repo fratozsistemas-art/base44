@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Upload, X, FileText, AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
+import { Upload, X, FileText, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { base44 } from '@/api/base44Client';
+import { CheckCircleIcon } from '@/lib/icons';
 
 export function SecureFileUpload({
   accept = '.jpg,.jpeg,.png,.pdf,.csv,.xlsx',
@@ -204,7 +205,7 @@ export function SecureFileUpload({
                       <Loader2 className="w-4 h-4 text-blue-400 animate-spin" />
                     )}
                     {fileData.status === 'completed' && (
-                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <CheckCircleIcon className="w-4 h-4 text-green-400" />
                     )}
                     {fileData.status === 'error' && (
                       <AlertCircle className="w-4 h-4 text-red-400" />

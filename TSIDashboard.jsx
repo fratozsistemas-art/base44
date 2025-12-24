@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
-  ArrowLeft, CheckCircle, Clock, AlertTriangle, FileText,
+  ArrowLeft, Clock, AlertTriangle, FileText,
   Download, Eye, TrendingUp, Shield, Zap, Loader2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast"; // Assuming toast is imported from react-hot-toast or similar
+import { CheckCircleIcon } from "@/lib/icons";
 
 export default function TSIDashboard({ project, onBack }) {
   const [selectedDeliverable, setSelectedDeliverable] = React.useState(null);
@@ -56,7 +57,7 @@ export default function TSIDashboard({ project, onBack }) {
 
   const getStatusIcon = (status) => {
     switch (status) {
-      case 'completed': return <CheckCircle className="w-5 h-5 text-green-400" />;
+      case 'completed': return <CheckCircleIcon className="w-5 h-5 text-green-400" />;
       case 'in_progress': return <Clock className="w-5 h-5 text-blue-400 animate-spin" />;
       case 'blocked': return <AlertTriangle className="w-5 h-5 text-red-400" />;
       default: return <Clock className="w-5 h-5 text-slate-400" />;
@@ -65,7 +66,7 @@ export default function TSIDashboard({ project, onBack }) {
 
   const getGateIcon = (status) => {
     switch (status) {
-      case 'passed': return <CheckCircle className="w-6 h-6 text-green-400" />;
+      case 'passed': return <CheckCircleIcon className="w-6 h-6 text-green-400" />;
       case 'failed': return <AlertTriangle className="w-6 h-6 text-red-400" />;
       case 'in_progress': return <Clock className="w-6 h-6 text-blue-400 animate-spin" />;
       default: return <Clock className="w-6 h-6 text-slate-400" />;
@@ -280,7 +281,7 @@ function PhaseCard({ title, deliverables, gateStatus, gateName, onSelectDelivera
 
   const getGateIcon = (status) => {
     switch (status) {
-      case 'passed': return <CheckCircle className="w-6 h-6 text-green-400" />;
+      case 'passed': return <CheckCircleIcon className="w-6 h-6 text-green-400" />;
       case 'failed': return <AlertTriangle className="w-6 h-6 text-red-400" />;
       case 'in_progress': return <Clock className="w-6 h-6 text-blue-400 animate-spin" />;
       default: return <Clock className="w-6 h-6 text-slate-400" />;
@@ -341,7 +342,7 @@ function DeliverableCard({ deliverable, onClick }) {
 
   const getStatusIcon = (status) => {
     switch (status) {
-      case 'completed': return <CheckCircle className="w-4 h-4" />;
+      case 'completed': return <CheckCircleIcon className="w-4 h-4" />;
       case 'in_progress': return <Clock className="w-4 h-4 animate-spin" />;
       case 'blocked': return <AlertTriangle className="w-4 h-4" />;
       default: return <Clock className="w-4 h-4" />;
@@ -458,7 +459,7 @@ function DeliverableModal({ deliverable, onClose, onExport, isExporting }) {
               <ul className="space-y-2">
                 {deliverable.content.recommendations.map((rec, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-slate-300">
-                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircleIcon className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                     <span>{rec}</span>
                   </li>
                 ))}
