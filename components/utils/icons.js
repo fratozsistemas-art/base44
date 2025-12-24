@@ -6,3 +6,5 @@ export const CheckCircleIcon = Icons.CheckCircle
   || Icons.CheckCircle2
   || Icons.CheckCircleIcon
   || fallbackIcon;
+
+export const CheckCircle = CheckCircleIcon;
