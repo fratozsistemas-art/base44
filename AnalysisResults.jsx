@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircleIcon } from "@/lib/icons";
+import { CheckCircleIcon } from "@/components/utils/icons";
 
 export default function AnalysisResults({ analysis }) {
   const [expanded, setExpanded] = useState(false);

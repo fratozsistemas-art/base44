@@ -3,7 +3,7 @@ import { Upload, X, FileText, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { base44 } from '@/api/base44Client';
-import { CheckCircleIcon } from '@/lib/icons';
+import { CheckCircleIcon } from '@/components/utils/icons';
 
 export function SecureFileUpload({
   accept = '.jpg,.jpeg,.png,.pdf,.csv,.xlsx',

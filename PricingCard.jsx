@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
-import { CheckCircleIcon } from "@/lib/icons";
+import { CheckCircleIcon } from "@/components/utils/icons";
 
 export default function PricingCard({ plan, index }) {
   const [billingCycle, setBillingCycle] = useState("monthly");

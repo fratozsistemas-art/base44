@@ -9,7 +9,7 @@ import {
   BarChart3, Lightbulb, Rocket, Network
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircleIcon } from '@/lib/icons';
+import { CheckCircleIcon } from '@/components/utils/icons';
 
 export default function AnalysisReportModal({ analysis, open, onClose }) {
   if (!analysis) return null;

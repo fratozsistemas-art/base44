@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast"; // Assuming toast is imported from react-hot-toast or similar
-import { CheckCircleIcon } from "@/lib/icons";
+import { CheckCircleIcon } from "@/components/utils/icons";
 
 export default function TSIDashboard({ project, onBack }) {
   const [selectedDeliverable, setSelectedDeliverable] = React.useState(null);
