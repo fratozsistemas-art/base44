@@ -6,9 +6,20 @@ import { ArrowRight, Clock, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 
-export default function QuickActionCard({ action, roleColor = "blue", themeColor = "blue" }) {
+export default function QuickActionCard({ 
+  action, 
+  title, 
+  description, 
+  roleColor = "blue", 
+  themeColor = "blue" 
+}) {
   const navigate = useNavigate();
   const displayColor = themeColor || roleColor;
+
+  // Support both action object and direct props
+  const displayTitle = title || action?.title || "Quick Action";
+  const displayDescription = description || action?.description;
+  const displayAction = action || { title: displayTitle, description: displayDescription };
 
   const colorClasses = {
     blue: { bg: "from-blue-500/20 to-cyan-500/20", border: "border-blue-500/30", text: "text-blue-400" },
@@ -25,11 +36,11 @@ export default function QuickActionCard({ action, roleColor = "blue", themeColor
   const colors = colorClasses[displayColor] || colorClasses.blue;
 
   const handleActivate = () => {
-    if (action.title.includes("Strategic Intelligence Unit")) {
+    if (displayTitle.includes("Strategic Intelligence Unit")) {
       navigate(createPageUrl("StrategicIntelligence"));
     } else {
       navigate(createPageUrl("Chat"), {
-        state: { quickAction: action }
+        state: { quickAction: displayAction }
       });
     }
   };
@@ -39,39 +50,44 @@ export default function QuickActionCard({ action, roleColor = "blue", themeColor
       <CardHeader className="border-b border-white/10">
         <div className="flex justify-between items-start mb-2">
           <CardTitle className="text-white text-lg leading-tight">
-            {action.title}
+            {displayTitle}
           </CardTitle>
         </div>
+        {displayDescription && (
+          <p className="text-sm text-slate-400 mt-2">{displayDescription}</p>
+        )}
         <div className="flex flex-wrap gap-2">
-          <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">
-            {action.category}
-          </span>
-          {action.theme && (
-            <span className="text-xs px-2 py-1 rounded-full bg-slate-500/20 text-slate-400 border border-slate-500/30">
-              {action.theme}
+          {displayAction.category && (
+            <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">
+              {displayAction.category}
             </span>
           )}
-          {action.role && (
+          {displayAction.theme && (
+            <span className="text-xs px-2 py-1 rounded-full bg-slate-500/20 text-slate-400 border border-slate-500/30">
+              {displayAction.theme}
+            </span>
+          )}
+          {displayAction.role && (
             <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
-              {action.role}
+              {displayAction.role}
             </span>
           )}
         </div>
       </CardHeader>
       
       <CardContent className="p-6 space-y-4">
-        {action.estimated_time && (
+        {displayAction.estimated_time && (
           <div className="flex items-center gap-2 text-sm text-slate-400">
             <Clock className="w-4 h-4" />
-            <span>Tempo estimado: {action.estimated_time}</span>
+            <span>Tempo estimado: {displayAction.estimated_time}</span>
           </div>
         )}
 
-        {action.expected_outputs && action.expected_outputs.length > 0 && (
+        {displayAction.expected_outputs && displayAction.expected_outputs.length > 0 && (
           <div>
             <h4 className="text-sm font-medium text-slate-300 mb-2">Entregas:</h4>
             <ul className="space-y-1">
-              {action.expected_outputs.slice(0, 3).map((output, idx) => (
+              {displayAction.expected_outputs.slice(0, 3).map((output, idx) => (
                 <li key={idx} className="text-sm text-slate-400 flex items-start gap-2">
                   <span className={`${colors.text} mt-1`}>•</span>
                   <span>{output}</span>
@@ -87,7 +103,7 @@ export default function QuickActionCard({ action, roleColor = "blue", themeColor
           variant="outline"
         >
           <Zap className="w-4 h-4 mr-2" />
-          {action.title.includes("Strategic Intelligence") ? "Configurar SIU" : "Ativar Análise"}
+          {displayTitle.includes("Strategic Intelligence") ? "Configurar SIU" : "Ativar Análise"}
           <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </CardContent>

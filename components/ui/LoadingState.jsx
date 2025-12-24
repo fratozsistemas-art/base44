@@ -91,12 +91,5 @@ export function SkeletonCard({ className = '' }) {
   );
 }
 
-export default {
-  LoadingSpinner,
-  LoadingCard,
-  LoadingOverlay,
-  LoadingDots,
-  LoadingBar,
-  SkeletonText,
-  SkeletonCard
-};
+// Default export for when using: import LoadingState from 'file'
+export default LoadingCard;
