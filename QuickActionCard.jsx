@@ -46,7 +46,11 @@ export default function QuickActionCard({
   };
 
   return (
-    <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
+    <Card 
+      className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 focus-within:ring-offset-slate-900"
+      role="article"
+      aria-labelledby={`action-title-${action?.title?.replace(/\s+/g, '-').toLowerCase() || 'default'}`}
+    >
       <CardHeader className="border-b border-white/10">
         <div className="flex justify-between items-start mb-2">
           <CardTitle className="text-white text-lg leading-tight">
@@ -99,12 +103,13 @@ export default function QuickActionCard({
 
         <Button
           onClick={handleActivate}
-          className={`w-full bg-gradient-to-r ${colors.bg} border ${colors.border} ${colors.text} hover:opacity-80 group-hover:translate-x-1 transition-all duration-300`}
+          className={`w-full min-h-[44px] bg-gradient-to-r ${colors.bg} border ${colors.border} ${colors.text} hover:opacity-80 group-hover:translate-x-1 transition-all duration-300 touch-target`}
           variant="outline"
+          aria-label={`Activate ${displayTitle}`}
         >
-          <Zap className="w-4 h-4 mr-2" />
+          <Zap className="w-4 h-4 mr-2" aria-hidden="true" />
           {displayTitle.includes("Strategic Intelligence") ? "Configurar SIU" : "Ativar Análise"}
-          <ArrowRight className="w-4 h-4 ml-2" />
+          <ArrowRight className="w-4 h-4 ml-2" aria-hidden="true" />
         </Button>
       </CardContent>
     </Card>

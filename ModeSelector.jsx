@@ -47,9 +47,9 @@ export default function ModeSelector({ selectedMode, onModeChange }) {
   ];
 
   return (
-    <div>
-      <label className="text-sm text-slate-400 mb-3 block">Analysis Mode</label>
-      <div className="grid md:grid-cols-2 gap-4">
+    <div role="radiogroup" aria-labelledby="mode-selector-label">
+      <label id="mode-selector-label" className="text-sm text-slate-400 mb-3 block">Analysis Mode</label>
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
         {modes.map((mode) => {
           const Icon = mode.icon;
           const isSelected = selectedMode === mode.id;
@@ -62,7 +62,17 @@ export default function ModeSelector({ selectedMode, onModeChange }) {
             >
               <Card
                 onClick={() => onModeChange(mode.id)}
-                className={`cursor-pointer transition-all duration-300 ${
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onModeChange(mode.id);
+                  }
+                }}
+                tabIndex={0}
+                role="radio"
+                aria-checked={isSelected}
+                aria-labelledby={`mode-${mode.id}-title`}
+                className={`cursor-pointer transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 ${
                   isSelected
                     ? 'bg-white/10 border-white/30 ring-2 ring-blue-500'
                     : 'bg-white/5 border-white/10 hover:bg-white/10'
@@ -75,7 +85,7 @@ export default function ModeSelector({ selectedMode, onModeChange }) {
                         <Icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="text-white font-semibold text-lg">{mode.name}</h3>
+                        <h3 id={`mode-${mode.id}-title`} className="text-white font-semibold text-lg">{mode.name}</h3>
                       </div>
                     </div>
                     {isSelected && (
