@@ -24,4 +24,28 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Code splitting strategy
+        manualChunks: {
+          'react-core': ['react', 'react-dom'],
+          'react-router': ['react-router-dom'],
+          'radix-ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+          'charts': ['recharts'],
+          'animations': ['framer-motion'],
+        }
+      }
+    },
+    // Optimize chunk size
+    chunkSizeWarningLimit: 600,
+    // Minification
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.log in production
+        drop_debugger: true
+      }
+    }
+  }
 })

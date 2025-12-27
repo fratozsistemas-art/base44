@@ -4,10 +4,48 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="https://base44.com/logo_v2.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval';
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' https: data: blob:;
+      font-src 'self' data:;
+      connect-src 'self' https://*.base44.com wss://*.base44.com https://*.novita.ai;
+      media-src 'self' blob:;
+      object-src 'none';
+      frame-ancestors 'self';
+      base-uri 'self';
+      form-action 'self';
+      upgrade-insecure-requests;
+    " />
+    
+    <!-- Accessibility -->
+    <meta name="description" content="Base44 - Strategic Intelligence Platform" />
+    <meta name="theme-color" content="#0f172a" />
+    
     <title>Base44 APP</title>
   </head>
   <body>
+    <!-- Skip to main content for keyboard navigation -->
+    <a href="#root" class="skip-to-main">Skip to main content</a>
+    
     <div id="root"></div>
     <script type="module" src="/main.jsx"></script>
+    
+    <!-- No JavaScript fallback -->
+    <noscript>
+      <div style="padding: 2rem; text-align: center; background: #1e293b; color: white;">
+        <h1>JavaScript Required</h1>
+        <p>This application requires JavaScript to be enabled. Please enable JavaScript in your browser settings.</p>
+      </div>
+    </noscript>
   </body>
 </html>
