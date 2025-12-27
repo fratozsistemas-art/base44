@@ -2,7 +2,7 @@ import React from 'react';
 import { Loader2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
-export function LoadingSpinner({ size = 'md', className = '' }) {
+export function LoadingSpinner({ size = 'md', className = '', ariaLabel = 'Loading' }) {
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-6 h-6',
@@ -11,16 +11,21 @@ export function LoadingSpinner({ size = 'md', className = '' }) {
   };
 
   return (
-    <Loader2 className={`animate-spin ${sizeClasses[size]} ${className}`} />
+    <Loader2 
+      className={`animate-spin ${sizeClasses[size]} ${className}`}
+      role="status"
+      aria-label={ariaLabel}
+      aria-live="polite"
+    />
   );
 }
 
 export function LoadingCard({ message = 'Loading...', className = '' }) {
   return (
-    <Card className={`bg-white/5 border-white/10 backdrop-blur-sm ${className}`}>
+    <Card className={`bg-white/5 border-white/10 backdrop-blur-sm ${className}`} role="region" aria-live="polite" aria-busy="true">
       <CardContent className="p-12 text-center">
-        <LoadingSpinner size="xl" className="text-blue-400 mx-auto mb-4" />
-        <p className="text-slate-400">{message}</p>
+        <LoadingSpinner size="xl" className="text-blue-400 mx-auto mb-4" ariaLabel={message} />
+        <p className="text-slate-400" aria-label={message}>{message}</p>
       </CardContent>
     </Card>
   );
@@ -30,11 +35,16 @@ export function LoadingOverlay({ message = 'Processing...', show = false }) {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div 
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="loading-message"
+    >
       <Card className="bg-slate-900/95 border-white/10 backdrop-blur-xl">
         <CardContent className="p-8 text-center">
-          <LoadingSpinner size="xl" className="text-blue-400 mx-auto mb-4" />
-          <p className="text-white font-medium">{message}</p>
+          <LoadingSpinner size="xl" className="text-blue-400 mx-auto mb-4" ariaLabel={message} />
+          <p id="loading-message" className="text-white font-medium">{message}</p>
         </CardContent>
       </Card>
     </div>

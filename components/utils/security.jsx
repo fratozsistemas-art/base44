@@ -327,9 +327,101 @@ export const securityChecks = {
   }
 };
 
+/**
+ * Mask sensitive data for display
+ */
+export function maskSensitiveData(data, visibleChars = 4) {
+  if (!data) return '';
+  
+  const str = String(data);
+  if (str.length <= visibleChars) return '*'.repeat(str.length);
+  
+  const visible = str.slice(-visibleChars);
+  const masked = '*'.repeat(str.length - visibleChars);
+  return masked + visible;
+}
+
+/**
+ * Secure clipboard copy
+ */
+export async function secureClipboardCopy(text, skipSensitive = true) {
+  try {
+    if (skipSensitive && containsSensitiveData(text)) {
+      console.warn('⚠️ Attempting to copy sensitive data');
+      return false;
+    }
+    
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (error) {
+    console.error('Clipboard error:', error);
+    return false;
+  }
+}
+
+/**
+ * Check if text contains sensitive data patterns
+ */
+export function containsSensitiveData(text) {
+  const sensitivePatterns = [
+    /\b\d{16}\b/g,  // Credit card
+    /\b\d{3}-\d{2}-\d{4}\b/g,  // SSN
+    /password|pwd|secret|token|key|bearer/gi,
+    /api[_-]?key/gi
+  ];
+  
+  return sensitivePatterns.some(pattern => pattern.test(text));
+}
+
+/**
+ * Sanitize object for logging (remove sensitive fields)
+ */
+export function sanitizeForLogging(obj) {
+  if (!obj || typeof obj !== 'object') return obj;
+  
+  const sensitiveKeys = ['password', 'token', 'secret', 'apiKey', 'api_key', 'authorization', 'creditCard', 'ssn'];
+  const sanitized = { ...obj };
+  
+  for (const key in sanitized) {
+    if (sensitiveKeys.some(sk => key.toLowerCase().includes(sk.toLowerCase()))) {
+      sanitized[key] = '[REDACTED]';
+    } else if (typeof sanitized[key] === 'object') {
+      sanitized[key] = sanitizeForLogging(sanitized[key]);
+    }
+  }
+  
+  return sanitized;
+}
+
+/**
+ * Security headers checker
+ */
+export function checkSecurityHeaders() {
+  const warnings = [];
+  
+  if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
+    warnings.push('Missing Content-Security-Policy header');
+  }
+  
+  if (!document.querySelector('meta[http-equiv="X-Frame-Options"]')) {
+    warnings.push('Missing X-Frame-Options header');
+  }
+  
+  if (warnings.length > 0) {
+    console.warn('🔐 Security Headers:', warnings.join(', '));
+  }
+  
+  return warnings.length === 0;
+}
+
 // Initialize security measures
 if (typeof window !== 'undefined') {
   preventClickjacking();
+  
+  // Check security headers on load
+  if (process.env.NODE_ENV === 'development') {
+    setTimeout(() => checkSecurityHeaders(), 1000);
+  }
 }
 
 export default {
@@ -346,5 +438,10 @@ export default {
   secureStorage,
   RateLimiter,
   inputValidation,
-  securityChecks
+  securityChecks,
+  maskSensitiveData,
+  secureClipboardCopy,
+  containsSensitiveData,
+  sanitizeForLogging,
+  checkSecurityHeaders
 };
